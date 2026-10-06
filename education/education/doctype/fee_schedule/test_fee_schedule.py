@@ -114,7 +114,10 @@ class TestFeeSchedule(FrappeTestCase):
 		"""
 		company_defaults = get_defaults()
 		income_account = frappe.get_all(
-			"Account", fields=["name"], filters={"is_group": 0}, limit=2
+			"Account",
+			fields=["name"],
+			filters={"is_group": 0, "company": "_Test Company"},
+			limit=2,
 		)[1]["name"]
 
 		fee_component = "Tuition Fee"

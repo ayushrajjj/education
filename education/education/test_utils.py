@@ -39,15 +39,19 @@ def before_tests():
 			}
 		)
 
-	if not frappe.db.exists("Item Group", "All Item Groups"):
-		frappe.get_doc(
-			{
-				"doctype": "Item Group",
-				"item_group_name": "All Item Groups",
-				"is_group": 1,
-				"parent_item_group": "",
-			}
-		).insert(ignore_permissions=True)
+	item_groups = [
+		{"item_group_name": "All Item Groups", "is_group": 1, "parent_item_group": ""},
+		{
+			"item_group_name": "Fee Component",
+			"is_group": 0,
+			"parent_item_group": "All Item Groups",
+		},
+	]
+	for item_group in item_groups:
+		if not frappe.db.exists("Item Group", item_group["item_group_name"]):
+			frappe.get_doc({"doctype": "Item Group", **item_group}).insert(
+				ignore_permissions=True
+			)
 
 	frappe.db.set_value(
 		"Stock Settings", None, "auto_insert_price_list_rate_if_missing", 0
