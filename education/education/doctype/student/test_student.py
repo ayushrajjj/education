@@ -41,8 +41,7 @@ class TestStudent(FrappeTestCase):
 					user_creation_attempts = [
 						call
 						for call in get_doc.call_args_list
-						if isinstance(call.args[0], dict)
-						and call.args[0].get("doctype") == "User"
+						if isinstance(call.args[0], dict) and call.args[0].get("doctype") == "User"
 					]
 				self.assertFalse(user_creation_attempts)
 
